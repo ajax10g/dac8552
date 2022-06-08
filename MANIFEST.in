@@ -1,0 +1,4 @@
+include versioneer.py
+include dac8552/_version.py
+include README.md
+include LICENSE

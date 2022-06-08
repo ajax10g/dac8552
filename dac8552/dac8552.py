@@ -18,7 +18,7 @@ from time import sleep
 
 import pigpio as io
 
-import DAC8552_default_config as DAC8552_default_config
+from . import DAC8552_default_config as DAC8552_default_config
 
 # --- Definition of control byte bits constants --- #
 # Control byte : logic OR together to form the control command value.
@@ -46,7 +46,7 @@ DAC_B = BUFFER_B | UPDATE_DAC_B
 # --- Timing constants --- #
 # When using hardware/hard-wired chip select, still a command to command
 # timeout of t_9 is needed as a minimum for the next commands.
-T_9_TIMEOUT = 100 / (10 ** 9)
+T_9_TIMEOUT = 100 / (10**9)
 
 
 class DAC8552(object):
@@ -126,10 +126,12 @@ class DAC8552(object):
             self.pi.write(self.CS_PIN, 0)
 
     def _chip_release(self):
-        """ Release chip select """
+        """Release chip select"""
         if self.CS_PIN is not None:
             self.pi.write(self.CS_PIN, 1)
-        sleep(T_9_TIMEOUT)  # Minimal time before the next command. I think this can be void
+        sleep(
+            T_9_TIMEOUT
+        )  # Minimal time before the next command. I think this can be void
 
     def power_down(self, channel, mode):
         """Toggle the selected channel to Power Down Mode
